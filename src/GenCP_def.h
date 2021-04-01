@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, Bart Swinnen
+ * Copyright (c) 2020-2021, Bart Swinnen
  * All rights reserved.
  *
  * BSD 2-Clause License (see included LICENSE file)
@@ -75,6 +75,6 @@ typedef struct gcp_flags_S {
  * GenCP endianess
  */
 typedef enum gcp_endianness_E {
-    GCP_LITTLE_ENDIAN = 0,
-    GCP_BIG_ENDIAN = 1
+    GCP_BIG_ENDIAN = 0x00000000,
+    GCP_LITTLE_ENDIAN = 0xFFFFFFFF
 } gcp_endianness_e;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, Bart Swinnen
+ * Copyright (c) 2020-2021, Bart Swinnen
  * All rights reserved.
  *
  * BSD 2-Clause License (see included LICENSE file)
@@ -7,7 +7,7 @@
 
 #include "GenCP_util.h"
 
-uint16_t crc16(uint16_t * buffer, uint32_t buffer_size_bytes, gcp_endianness_e endianness)
+uint16_t crc16(uint16_t * buffer, size_t buffer_size_bytes, gcp_endianness_e endianness)
 {
     uint64_t crc = 0;
     for (uint32_t i = 0; i < (buffer_size_bytes / 2); ++i)

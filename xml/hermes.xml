@@ -1,0 +1,331 @@
+<!-- TODO: Figure out namespace stuffs
+     Add missing features behind pIsImplemented (and link to capabilities register) -->
+
+<RegisterDescription
+    xmlns="http://www.genicam.org/GenApi/Version_1_1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    ModelName="Hermes" VendorName=""
+    StandardNameSpace="CL"
+    SchemaMajorVersion="1"
+    SchemaMinorVersion="1"
+    SchemaSubMinorVersion="0"
+    MajorVersion="1"
+    MinorVersion="0"
+    SubMinorVersion="108"
+    ProductGuid="44696F6E-6543-4C47-656E-435030314849"
+    VersionGuid="47656E43-5043-4C30-3031-303030303643"
+    xsi:schemaLocation="http://www.genicam.org/GenApi/GenApiSchema_Version_1_1.xsd">
+
+<Port Name="Device" NameSpace="Standard">
+    <Visibility>Invisible</Visibility>
+    <ImposedAccessMode>RW</ImposedAccessMode>
+</Port>
+
+<Integer Name="TLParamsLocked">
+    <Visibility>Invisible</Visibility>
+    <AccessMode>RW</AccessMode>
+    <Value>0</Value>
+    <Min>0</Min>
+    <Max>1</Max>
+</Integer>
+
+<Group Comment="Root">
+    <Category Name="Root" NameSpace="Standard">
+        <Visibility>Beginner</Visibility>
+        <pFeature>DeviceControl</pFeature>
+        <pFeature>TransportLayerControl</pFeature>
+    </Category>
+</Group>
+
+<Group Comment="Device control">
+    <Category Name="DeviceControl" NameSpace="Standard">
+        <DisplayName>Device control</DisplayName>
+        <Visibility>Beginner</Visibility>
+        <!-- TODO: Create features, map to GenCP registers -->
+        <pFeature>DeviceVendorName</pFeature>
+        <pFeature>DeviceModelName</pFeature>
+        <pFeature>DeviceManufacturerInfo</pFeature>
+        <pFeature>DeviceVersion</pFeature>
+        <pFeature>DeviceSerialNumber</pFeature>
+        <pFeature>DeviceGenCPVersionMajor</pFeature>
+        <pFeature>DeviceGenCPVersionMinor</pFeature>
+    </Category>
+</Group>
+
+<Group Comment="Transport layer control">
+    <Category Name="TransportLayerControl" NameSpace="Standard">
+        <DisplayName>Transport layer control</DisplayName>
+        <Visibility>Beginner</Visibility>
+        <pFeature>GenCPControl</pFeature>
+    </Category>
+</Group>
+
+<Group Comment="GenCP control">
+    <Category Name="GenCPControl" NameSpace="Standard">
+        <DisplayName>GenCP control</DisplayName>
+        <Visibility>Beginner</Visibility>
+        <!-- TODO: Breakout into features, map to GenCP registers -->
+        <pFeature>GenCPDeviceCapability</pFeature>
+        <pFeature>GenCPMaximumDeviceResponseTime</pFeature>
+        <pFeature>GenCPManifestTableAddress</pFeature>
+        <pFeature>GenCPDeviceConfiguration</pFeature>
+    </Category>
+</Group>
+
+<Group Comment="GenCP bootstrap registers">
+    <StructReg Comment="GenCPVersion">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0000</Address>
+        <Length>4</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+        <StructEntry Name="GenCPVersionMajor" NameSpace="Standard">
+            <LSB>16</LSB>
+            <MSB>31</MSB>
+            <Sign>Unsigned</Sign>
+        </StructEntry>
+        <StructEntry Name="GenCPVersionMinor" NameSpace="Standard">
+            <LSB>0</LSB>
+            <MSB>15</MSB>
+            <Sign>Unsigned</Sign>
+        </StructEntry>
+    </StructReg>
+
+    <StringReg Name="GenCPManufacturerName">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0004</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StringReg Name="GenCPModelName">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0044</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StringReg Name="GenCPFamilyName">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0084</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPFamilyNameSupported</pIsImplemented>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StringReg Name="GenCPDeviceVersion">
+        <Visibility>Invisible</Visibility>
+        <Address>0x00C4</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StringReg Name="GenCPManufacturerInfo">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0104</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StringReg Name="GenCPSerialNumber">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0144</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StringReg Name="GenCPModelName">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0184</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPUserDefinedNameSupported</pIsImplemented>
+        <pPort>Device</pPort>
+    </StringReg>
+
+    <StructReg Comment="GenCPDeviceCapability">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01C4</Address>
+        <Length>8</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+        <StructEntry Name="GenCPUserDefinedNameSupported" NameSpace="Standard">
+            <Bit>0</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPAccessPrivilegeSupported" NameSpace="Standard">
+            <Bit>1</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPMessageChannelSupported" NameSpace="Standard">
+            <Bit>2</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPTimestampSupported" NameSpace="Standard">
+            <Bit>3</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPStringEncoding" NameSpace="Standard">
+            <LSB>4</LSB>
+            <MSB>7</MSB>
+            <Sign>Unsigned</Sign>
+        </StructEntry>
+        <StructEntry Name="GenCPFamilyNameSupported" NameSpace="Standard">
+            <Bit>8</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPSBRMSupported" NameSpace="Standard">
+            <Bit>9</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPEndianessRegisterSupported" NameSpace="Standard">
+            <Bit>10</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPWrittenLengthFieldSupported" NameSpace="Standard">
+            <Bit>11</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPMultiEventSupported" NameSpace="Standard">
+            <Bit>12</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPStackedCommandsSupported" NameSpace="Standard">
+            <Bit>13</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPDeviceSoftwareVersionSupported" NameSpace="Standard">
+            <Bit>14</Bit>
+        </StructEntry>
+    </StructReg>
+
+    <IntReg Name="GenCPMaximumDeviceResponseTime">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01CC</Address>
+        <Length>4</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <IntReg Name="GenCPManifestTableAddress">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01D0</Address>
+        <Length>8</Length>
+        <AccessMode>RO</AccessMode>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <IntReg Name="GenCPSBRMAddress">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01D8</Address>
+        <Length>8</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPSBRMSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <StructReg Comment="GenCPDeviceConfiguration">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01E0</Address>
+        <Length>8</Length>
+        <AccessMode>RW</AccessMode>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+        <StructEntry Name="GenCPHeartbeatEnable" NameSpace="Standard">
+            <Bit>0</Bit>
+        </StructEntry>
+        <StructEntry Name="GenCPMultiEventEnable" NameSpace="Standard">
+            <Bit>1</Bit>
+        </StructEntry>
+    </StructReg>
+
+    <IntReg Name="GenCPHeartbeatTimeout">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01E8</Address>
+        <Length>4</Length>
+        <AccessMode>RW</AccessMode>
+        <pIsImplemented>GenCPAccessPrivilegeSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <IntReg Name="GenCPMessageChannelID">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01EC</Address>
+        <Length>4</Length>
+        <AccessMode>RW</AccessMode>
+        <pIsImplemented>GenCPMessageChannelSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <IntReg Name="GenCPTimestamp">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01F0</Address>
+        <Length>8</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPTimestampSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <StructReg Comment="GenCPTimestampLatch">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01F8</Address>
+        <Length>4</Length>
+        <AccessMode>WO</AccessMode>
+        <pIsImplemented>GenCPTimestampSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+        <StructEntry Name="GenCPTimestampLatch" NameSpace="Standard">
+            <Bit>0</Bit>
+        </StructEntry>
+    </StructReg>
+
+    <IntReg Name="GenCPTimestampIncrement">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01FC</Address>
+        <Length>8</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPTimestampSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <StructReg Comment="GenCPAccessPrivilege">
+        <Visibility>Invisible</Visibility>
+        <Address>0x01F8</Address>
+        <Length>4</Length>
+        <AccessMode>RW</AccessMode>
+        <pIsImplemented>GenCPAccessPrivilegeSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+        <StructEntry Name="GenCPAccessPrivilege" NameSpace="Standard">
+            <LSB>0</LSB>
+            <MSB>3</MSB>
+            <Sign>Unsigned</Sign>
+        </StructEntry>
+    </StructReg>
+
+    <IntReg Name="GenCPImplementationEndianess">
+        <Visibility>Invisible</Visibility>
+        <Address>0x020C</Address>
+        <Length>4</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPAccessPrivilegeSupported</pIsImplemented>
+        <pPort>Device</pPort>
+        <Endianess>BigEndian</Endianess>
+    </IntReg>
+
+    <StringReg Name="GenCPDeviceSoftwareVersion">
+        <Visibility>Invisible</Visibility>
+        <Address>0x0210</Address>
+        <Length>64</Length>
+        <AccessMode>RO</AccessMode>
+        <pIsImplemented>GenCPDeviceSoftwareVersionSupported</pIsImplemented>
+        <pPort>Device</pPort>
+    </StringReg>
+</Group>
+
+</RegisterDescription>
