@@ -12,4 +12,4 @@
 
 #include "GenCP_def.h"
 
-uint16_t crc16(uint16_t * buffer, size_t buffer_size_bytes, gcp_endianness_e endianness);
+uint16_t crc16(const uint16_t * buffer, size_t buffer_size_bytes, enum gcp_endianness endianness);

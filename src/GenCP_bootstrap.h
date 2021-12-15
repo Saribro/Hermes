@@ -2,7 +2,9 @@
 
 #include <stdint.h>
 
-typedef struct gcp_bootstrap_type {
+#pragma pack(push, 1)
+
+struct gcp_bootstrap {
     uint32_t gencp_version;                 // [M]  (R)     0x0000
     uint8_t manufacturer_name[64];          // [M]  (R)     0x0004
     uint8_t model_name[64];                 // [M]  (R)     0x0044
@@ -26,9 +28,9 @@ typedef struct gcp_bootstrap_type {
     //uint32_t implementation_endianess;      // [CM] (R)     0x020C
     //uint8_t device_software_version[64];    // [CM] (R)     0x0210
   //uint8_t reserved[64944];                // [M]  (/)     0x0250
-} gcp_bootstrap_t;
+};
 
-typedef struct gcp_manifest_entry_type {
+struct gcp_manifest_entry {
     uint32_t genicam_file_version_sub_minor : 16;
     uint32_t genicam_file_version_minor : 8;
     uint32_t genicam_file_version_major : 8;
@@ -43,9 +45,11 @@ typedef struct gcp_manifest_entry_type {
     uint64_t file_size;
     uint8_t sha1_hash[20];
     uint8_t RESERVED1[20];
-} gcp_manifest_entry_t;
+};
 
-typedef struct gcp_manifest_table_type {
+struct gcp_manifest_table {
     uint64_t mt_entry_count;
-    gcp_manifest_entry_t manifest_entry[];
-} gcp_manifest_table_t;
+    gcp_manifest_entry manifest_entry[];
+};
+
+#pragma pack(pop)
